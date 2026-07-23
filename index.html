@@ -933,22 +933,16 @@ const messages=[
 
 function getDaysLeft(){
 
+let today = new Date().getTime();
 
-let today=new Date().getTime();
+let target = new Date("September 4, 2026 00:00:00").getTime();
 
-
-let target=new Date("September 4, 2026 00:00:00").getTime();
-
-
-
-let difference=target-today;
-
+let difference = target - today;
 
 
 return Math.ceil(
-difference/(1000*60*60*24)
+difference / (1000*60*60*24)
 );
-
 
 }
 
@@ -967,13 +961,12 @@ let daysLeft=getDaysLeft();
 
 
 
+// create letters from Day 42 down to Day 1
 
 messages.forEach((message,index)=>{
 
 
-
-let dayNumber=42-index;
-
+let dayNumber = 42 - index;
 
 
 let box=document.createElement("div");
@@ -983,9 +976,9 @@ box.className="message-box";
 
 
 
+// ONLY OPEN WHEN IT IS THAT DAY OR AFTER
 
-
-if(dayNumber>daysLeft){
+if(daysLeft < dayNumber){
 
 
 box.classList.add("locked");
@@ -997,30 +990,49 @@ box.innerHTML=`
 🔒 Day ${dayNumber}
 </h3>
 
+
 <div class="preview">
-Waiting until this day arrives ❤️
+
+This letter will open when there are ${dayNumber} days left ❤️
+
 </div>
 
 `;
 
 
+// completely disable clicking
+
+box.onclick=function(){
+
+return false;
+
+};
+
+
 
 }
 
-else{
 
+
+
+else{
 
 
 box.innerHTML=`
 
 <h3>
+
 💌 Day ${dayNumber}
+
 </h3>
 
 
 <div class="preview">
-A little thing I miss about you...
+
+Click to open your letter ❤️
+
 </div>
+
 
 
 <div class="message-content">
@@ -1033,16 +1045,13 @@ ${message}
 
 </div>
 
-
 `;
 
 
 
 box.onclick=function(){
 
-
 box.classList.toggle("open");
-
 
 };
 
@@ -1051,8 +1060,6 @@ box.classList.toggle("open");
 }
 
 
-
-// Put newest day first
 
 
 container.appendChild(box);
@@ -1064,8 +1071,6 @@ container.appendChild(box);
 
 
 }
-
-
 
 
 
